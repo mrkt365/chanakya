@@ -1,0 +1,3 @@
+[program:gunicorn]
+command=sudo -u <%= @user %> <%= @app_root %>/env/bin/gunicorn -c twinsister/gunicorn_settings.py twinsister.wsgi:application
+directory=<%= @app_root %>/src/
