@@ -75,6 +75,7 @@ template "/etc/nginx/sites-available/chanakya" do
   group node['nginx']['user']
   variables({app_root: node['chanakya']['app_root'],
     hostname: node['chanakya']['hostname'],
+    name: node['name'],
     user: node['chanakya']['user'],
     protect: node['chanakya']['password_protect'],
     ssl_enabled: node['chanakya']['ssl_enabled']})
