@@ -9,6 +9,8 @@ include_recipe "postgresql::server"
 include_recipe "nodejs::install_from_package"
 include_recipe "supervisor"
 
+node_name = Chef::Config[:node_name]
+
 # install git
 apt_package "git"
 
@@ -69,13 +71,13 @@ execute "create_db" do
 end
 
 # nginx conf
-template "/etc/nginx/sites-available/#{node['name']}" do
+template "/etc/nginx/sites-available/#{node_name}" do
   source "nginx.erb"
   owner node['nginx']['user']
   group node['nginx']['user']
   variables({app_root: node['chanakya']['app_root'],
     hostname: node['chanakya']['hostname'],
-    name: node['name'],
+    name: node_name,
     user: node['chanakya']['user'],
     protect: node['chanakya']['password_protect'],
     ssl_enabled: node['chanakya']['ssl_enabled']})
