@@ -9,8 +9,16 @@ include_recipe "postgresql::server"
 include_recipe "nodejs::install_from_package"
 include_recipe "supervisor"
 
-# create directory and clone repo if it doesn't exist
+# install git
 apt_package "git"
+
+# disable strict host key checking for github
+template "/home/#{node['chanakya']['user']}/.ssh/config" do
+  source "ssh-config.erb"
+  owner node['chanakya']['user']
+end
+
+# create directory and clone repo if it doesn't exist
 unless File.directory?(node['chanakya']['app_root'])
   execute "git clone" do
     command "git clone -b #{node['chanakya']['git_branch']} #{node['chanakya']['git_repo']}"
