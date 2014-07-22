@@ -45,6 +45,12 @@ packages.each do |pkg|
   end
 end
 
+# install gunicorn
+execute "install_gunicorn" do
+  command "env/bin/pip install gunicorn"
+  cwd node['chanakya']['app_root']
+end
+
 # python requirements
 execute "python_requirements" do
   command "env/bin/pip install -r requirements.txt"
@@ -122,8 +128,12 @@ end
 # supervisor
 template "/etc/supervisor.d/chanakya.conf" do
   source "supervisor.erb"
-  variables({app_root: node['chanakya']['app_root'],
-    user: node['chanakya']['user']})
+  variables({
+      app_root: node['chanakya']['app_root'],
+      gunicorn_path: node['chanakya']['gunicorn_settings_path'],
+      wsgi_path: node['chanakya']['wsgi_path'],
+      user: node['chanakya']['user']
+    })
 end
 
 service "supervisor" do
