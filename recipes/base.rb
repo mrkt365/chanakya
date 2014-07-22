@@ -69,7 +69,7 @@ execute "create_db" do
 end
 
 # nginx conf
-template "/etc/nginx/sites-available/chanakya" do
+template "/etc/nginx/sites-available/#{node['name']}" do
   source "nginx.erb"
   owner node['nginx']['user']
   group node['nginx']['user']
