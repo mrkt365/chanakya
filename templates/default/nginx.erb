@@ -15,8 +15,8 @@ server {
 
   keepalive_timeout 5;
 
-  access_log /var/log/nginx/<%= name %>.access.log combined;
-  error_log /var/log/nginx/<%= name %>.error.log;
+  access_log /var/log/nginx/<%= @name %>.access.log combined;
+  error_log /var/log/nginx/<%= @name %>.error.log;
 
   location @proxy_to_app {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
