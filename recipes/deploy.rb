@@ -18,10 +18,12 @@ execute "syncdb" do
   user node['chanakya']['user']
 end
 
-execute "migrate" do
-  command "env/bin/python src/manage.py migrate"
-  cwd node['chanakya']['app_root']
-  user node['chanakya']['user']
+if node['chanakya']['use_migrations']
+  execute "migrate" do
+    command "env/bin/python src/manage.py migrate"
+    cwd node['chanakya']['app_root']
+    user node['chanakya']['user']
+  end
 end
 
 # collectstatic
