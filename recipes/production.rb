@@ -23,4 +23,11 @@ rules.each do |r|
 end
 firewall 'ufw'
 
+# sass
+apt_package "ruby"
+execute "install_sass" do
+  command "gem install sass"
+  user "root"
+end
+
 include_recipe "chanakya::deploy"
